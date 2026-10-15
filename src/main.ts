@@ -52,6 +52,7 @@ lemon.on('mouseleave', () => {
 });
 
 let scaleTween: Konva.Tween | undefined;
+let rotationAnimation: Konva.Animation | undefined;
 let pressedPointerId: number | undefined;
 
 function animateScale(scale: number) {
@@ -66,16 +67,26 @@ function animateScale(scale: number) {
   });
   scaleTween.play();
 }
-
+function animateRotation(speed: number) {
+  rotationAnimation?.stop();
+  rotationAnimation = new Konva.Animation((frame) => {
+    if (!frame) return;
+    const angleDiff = (frame.timeDiff * speed) / 1000;
+    lemon.rotate(angleDiff);
+  }, layer);
+  rotationAnimation.start();
+}
 lemon.on('pointerdown', (event) => {
   if (pressedPointerId !== undefined) return;
   pressedPointerId = event.evt.pointerId;
   animateScale(1.1);
+  animateRotation(90);
 });
 
 function releaseLemon(event: PointerEvent) {
   if (pressedPointerId === undefined || event.pointerId !== pressedPointerId) return;
   pressedPointerId = undefined;
+  rotationAnimation?.stop();
   animateScale(1);
 }
 
@@ -85,6 +96,7 @@ window.addEventListener('pointercancel', releaseLemon);
 window.addEventListener('blur', () => {
   if (pressedPointerId === undefined) return;
   pressedPointerId = undefined;
+  rotationAnimation?.stop();
   animateScale(1);
 });
 
