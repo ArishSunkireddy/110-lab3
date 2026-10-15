@@ -1,1 +1,15 @@
+# Dependencies
+node_modules/
 
+# Vite build output
+dist/
+
+# Environment variables
+.env
+.env.local
+
+# Mac files
+.DS_Store
+
+# Logs
+*.log
