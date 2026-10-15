@@ -15,6 +15,7 @@ stage.add(layer);
 const lemon = new Konva.Shape({
   x: 200,
   y: 200,
+  draggable: true,
   fill: 'yellow',
   stroke: 'black',
   strokeWidth: 2,
