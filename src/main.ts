@@ -11,15 +11,26 @@ const stage = new Konva.Stage({
 const layer = new Konva.Layer();
 stage.add(layer);
 
-// Create a yellow circle
-const circle = new Konva.Circle({
+// Draw an oval lemon with a small pointed bump at each end.
+const lemon = new Konva.Shape({
   x: 200,
   y: 200,
-  radius: 60,
   fill: 'yellow',
   stroke: 'black',
-  strokeWidth: 2
+  strokeWidth: 2,
+  sceneFunc(context, shape) {
+    context.beginPath();
+    context.moveTo(-82, 0);
+    context.bezierCurveTo(-82, -8, -72, -9, -66, -17);
+    context.bezierCurveTo(-39, -65, 39, -65, 66, -17);
+    context.bezierCurveTo(72, -9, 82, -8, 82, 0);
+    context.bezierCurveTo(82, 8, 72, 9, 66, 17);
+    context.bezierCurveTo(39, 65, -39, 65, -66, 17);
+    context.bezierCurveTo(-72, 9, -82, 8, -82, 0);
+    context.closePath();
+    context.fillStrokeShape(shape);
+  }
 });
 
-// Add circle to layer
-layer.add(circle);
+// Add the lemon to the layer.
+layer.add(lemon);
