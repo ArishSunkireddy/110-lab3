@@ -32,5 +32,14 @@ const lemon = new Konva.Shape({
   }
 });
 
+let previousCursor = '';
+lemon.on('mouseenter', () => {
+  previousCursor = stage.container().style.cursor;
+  stage.container().style.cursor = 'pointer';
+});
+lemon.on('mouseleave', () => {
+  stage.container().style.cursor = previousCursor;
+});
+
 // Add the lemon to the layer.
 layer.add(lemon);
